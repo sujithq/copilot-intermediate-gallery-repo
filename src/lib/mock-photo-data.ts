@@ -1,6 +1,7 @@
 export interface Photo {
   id: string;
   url: string;
+  filename?: string;
   title: string;
   tags: string[];
   likes: number;
@@ -13,7 +14,7 @@ export interface Photo {
 export const mockPhotos: Photo[] = [
   {
     id: '1',
-    url: '/placeholder-1.jpg',
+    url: '/photos/placeholder-1.svg',
     title: 'Sunset Landscape',
     tags: ['landscape', 'sunset', 'nature'],
     likes: 124,
@@ -24,7 +25,7 @@ export const mockPhotos: Photo[] = [
   },
   {
     id: '2',
-    url: '/placeholder-2.jpg',
+    url: '/photos/placeholder-2.svg',
     title: 'Portrait Study',
     tags: ['portrait', 'studio', 'professional'],
     likes: 89,
@@ -35,7 +36,7 @@ export const mockPhotos: Photo[] = [
   },
   {
     id: '3',
-    url: '/placeholder-3.jpg',
+    url: '/photos/placeholder-3.svg',
     title: 'Architecture',
     tags: ['architecture', 'building', 'city'],
     likes: 156,
@@ -46,7 +47,7 @@ export const mockPhotos: Photo[] = [
   },
   {
     id: '4',
-    url: '/placeholder-4.jpg',
+    url: '/photos/placeholder-4.svg',
     title: 'Nature Close-up',
     tags: ['macro', 'nature', 'flowers'],
     likes: 203,
@@ -57,7 +58,7 @@ export const mockPhotos: Photo[] = [
   },
   {
     id: '5',
-    url: '/placeholder-5.jpg',
+    url: '/photos/placeholder-5.svg',
     title: 'Street Photography',
     tags: ['street', 'candid', 'urban'],
     likes: 91,
@@ -68,7 +69,7 @@ export const mockPhotos: Photo[] = [
   },
   {
     id: '6',
-    url: '/placeholder-6.jpg',
+    url: '/photos/placeholder-6.svg',
     title: 'Wedding Moment',
     tags: ['wedding', 'love', 'ceremony'],
     likes: 267,
@@ -79,7 +80,7 @@ export const mockPhotos: Photo[] = [
   },
   {
     id: '7',
-    url: '/placeholder-7.jpg',
+    url: '/photos/placeholder-7.svg',
     title: 'Mountain Vista',
     tags: ['landscape', 'mountain', 'adventure'],
     likes: 189,
@@ -90,7 +91,7 @@ export const mockPhotos: Photo[] = [
   },
   {
     id: '8',
-    url: '/placeholder-8.jpg',
+    url: '/photos/placeholder-8.svg',
     title: 'Urban Nightscape',
     tags: ['night', 'city', 'lights'],
     likes: 234,
@@ -101,7 +102,7 @@ export const mockPhotos: Photo[] = [
   },
   {
     id: '9',
-    url: '/placeholder-9.jpg',
+    url: '/photos/placeholder-9.svg',
     title: 'Wildlife Portrait',
     tags: ['wildlife', 'nature', 'animal'],
     likes: 312,

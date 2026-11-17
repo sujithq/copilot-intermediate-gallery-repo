@@ -79,6 +79,25 @@ Once ready, you can access the application at the forwarded port URL provided in
    ```
    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+## Photo downloads
+
+Gallery downloads use `src/lib/photo-download.ts` through the per-photo
+`usePhotoDownloads` hook. `PhotoDownloadService` accepts an asset descriptor
+(`id`, `url`, optional `title`/`filename`) and returns a filename or throws a
+user-safe `PhotoDownloadError`. The grid accepts an optional `downloadService`
+adapter so future bulk operations can reuse the same I/O boundary.
+
+The demo data points to local SVG placeholders in `public/photos/`, matching
+the gallery's placeholder colors. Replace these URLs with real photo assets in
+production; external assets must permit CORS. Only same-origin responses supply
+trusted `Content-Disposition` filenames (including UTF-8 `filename*`); otherwise
+the service uses photo metadata or a deterministic photo-ID fallback. Filenames
+are sanitized and their extensions follow the validated image MIME type.
+Object URLs are released shortly after the browser download is triggered.
+
+Run the mocked download service and gallery interaction tests with `npm test`.
+No external service, credentials, or deployment URL is required.
+
 ## Project Structure
 
 ```bash
