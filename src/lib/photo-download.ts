@@ -49,7 +49,7 @@ function dispositionFilename(value: string | null): string | undefined {
       // Fall back to the plain filename if the encoded value is malformed.
     }
   }
-  const plain = /(?:^|;)\s*filename\s*=\s*(?:"((?:\\.|[^"])*)"|([^;]+))/i.exec(value);
+  const plain = /(?:^|;)\s*filename\s*=\s*(?:"((?:\\.|[^"\\])*)"|([^;]+))/i.exec(value);
   return plain?.[1]?.replace(/\\(.)/g, '$1') ?? plain?.[2]?.trim();
 }
 

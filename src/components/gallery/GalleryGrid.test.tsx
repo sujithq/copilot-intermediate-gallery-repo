@@ -30,6 +30,7 @@ describe('GalleryGrid downloads', () => {
     await user.click(button);
     expect(button).toBeDisabled();
     expect(button).toHaveAttribute('aria-busy', 'true');
+    expect(button.parentElement).toHaveClass('opacity-100');
     expect(button.querySelector('svg')).toHaveClass('h-4', 'w-4', 'animate-spin');
     expect(button).toHaveAccessibleDescription('Downloading Sunset Landscape.');
     await user.click(button);
@@ -39,6 +40,7 @@ describe('GalleryGrid downloads', () => {
     await act(async () => pending.resolve({ filename: 'photo.jpg' }));
     expect(button).toBeEnabled();
     expect(button).toHaveAttribute('aria-busy', 'false');
+    expect(button.parentElement).toHaveClass('opacity-0');
     expect(button.querySelector('svg')).not.toHaveClass('animate-spin');
     expect(button).toHaveAccessibleDescription('Download started for Sunset Landscape.');
     const status = document.getElementById(button.getAttribute('aria-describedby')!);

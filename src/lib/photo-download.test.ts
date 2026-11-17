@@ -128,6 +128,13 @@ describe('downloadPhoto', () => {
       .resolves.toEqual({ filename: 'metadata.jpg' });
   });
 
+  it('handles a long malformed quoted filename without excessive backtracking', async () => {
+    fetchMock.mockResolvedValue(response({
+      disposition: `attachment; filename="${'\\!'.repeat(2000)}`,
+    }));
+    await expect(downloadPhoto(asset)).resolves.toEqual({ filename: 'photo-42.jpg' });
+  });
+
   it('falls back deterministically when metadata is missing', async () => {
     await expect(downloadPhoto({ id: '42', url: asset.url }))
       .resolves.toEqual({ filename: 'photo-42.jpg' });

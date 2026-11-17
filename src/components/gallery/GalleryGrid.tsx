@@ -110,7 +110,7 @@ export function GalleryGrid({
               </div>
 
               {/* Action Buttons */}
-              <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
+              <div className={`absolute top-3 right-3 flex gap-2 ${downloadState?.status === 'downloading' ? 'opacity-100' : 'opacity-0'} group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300`}>
                 <button
                   onClick={() => toggleLike(photo.id)}
                   className={`p-2 rounded-full backdrop-blur-sm transition-colors ${
