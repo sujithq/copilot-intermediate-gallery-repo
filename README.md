@@ -88,3 +88,59 @@ src/
 ├── lib/                 # Utility functions and helpers
 demos/                   # Demo guides and templates
 ```
+
+## Photo Downloads
+
+Each gallery card's download button retrieves that photo's `Photo.url`. Only the
+active photo's download action is disabled; other cards and gallery controls remain
+usable. Loading and browser handoff are announced to assistive technology. Errors
+appear on the affected card, and the same button can retry. "Download started"
+means the file was handed to the browser, not that it was saved to disk.
+
+`src/lib/photo-download.ts` exposes the typed, independently mockable
+`PhotoDownloadService`; `src/hooks/usePhotoDownload.ts` owns per-photo state,
+duplicate-request prevention, and unmount cancellation. The service accepts JPEG,
+PNG, GIF, and WebP responses, checks MIME/signature agreement, and decodes the image
+before offering it for download. It requires a modern browser with Fetch, Blob,
+AbortController, and `createImageBitmap` support. Temporary anchors are removed
+immediately and object URLs are revoked shortly after browser handoff.
+
+Filenames prefer a valid `Content-Disposition` filename (including UTF-8
+`filename*`) only from a same-origin final response. All filenames are sanitized
+for filesystem safety and use an extension matching the image type. Missing or
+unusable metadata falls back to the photo title and ID, then `photo-<id>`.
+URLs and response bodies are never included in user-facing errors or logs.
+
+The nine small PNGs in `public/photos/` are original, deterministic demo fixtures
+generated from raw RGB gradients and geometric shapes with the project's existing
+[Sharp](https://sharp.pixelplumbing.com/) dependency. They are not photographs,
+contain no third-party imagery, and require no external image service. The gallery
+continues to show its existing gradient previews.
+
+Future remote assets must allow browser fetches through
+[CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS).
+Their server must expose `Content-Disposition` through
+`Access-Control-Expose-Headers`, and a trusted adapter must explicitly authorize
+using that metadata; the default service ignores cross-origin filenames.
+Do not embed deployment-specific URLs, credentials, or signed URLs in source code.
+Bulk downloads and server-side ZIP generation are not implemented.
+
+## Download Tests
+
+The tests use [Next.js's Jest integration](https://nextjs.org/docs/app/guides/testing/jest)
+with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/),
+[jest-dom](https://github.com/testing-library/jest-dom), and
+[user-event](https://testing-library.com/docs/user-event/intro/). Network requests,
+image decoding, browser download APIs, and the grid's download service are mocked;
+no external image service is contacted.
+
+```bash
+npm test -- --runInBand
+npx --no-install tsc --noEmit
+```
+
+Tests cover payload/error handling, safe filenames, browser-resource cleanup,
+independent downloads, duplicate clicks, retry, keyboard/ARIA behavior, and existing
+gallery interactions. For a manual smoke check, run `npm run dev`, download a photo
+from `/gallery`, and verify its filename and PNG content. Also check keyboard focus,
+a narrow touch viewport, dark mode, and failure/retry using browser network tools.
